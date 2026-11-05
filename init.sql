@@ -10,3 +10,5 @@ CREATE TABLE IF NOT EXISTS `client` (
   PRIMARY KEY (`idClient`),
   UNIQUE KEY `pseudo` (`pseudo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+ALTER TABLE `client` 
+ADD CONSTRAINT IF NOT EXISTS `pseudo` UNIQUE (`pseudo`);
