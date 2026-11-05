@@ -4,7 +4,6 @@ session_start();
 require_once("info_bdd.php");
 
 /**
- * RÉCUPÉRATION DES DONNÉES ENVOYÉES PAR ADMIN.PHP
  * noCommande : ID de la commande à modifier
  * nouveauStatut : Valeur '2' pour "Confirmer"
  */

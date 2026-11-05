@@ -13,11 +13,6 @@ $erreur = $_GET['erreur'] ?? null;
                 </div>
                 
                 <div class="card-body p-4">
-                    <!-- 
-                        IMPORTANT : 
-                        action="connexionclient_exe.php" envoie les données au script de traitement.
-                        method="post" sécurise l'envoi des identifiants.
-                    -->
                     <form action="connexionclient_exe.php" method="post">
                         
                         <!-- Champ Email / Login -->

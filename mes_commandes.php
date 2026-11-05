@@ -2,7 +2,7 @@
 require_once("info_bdd.php");
 // La session est déjà démarrée dans index.php
 
-// 1. SÉCURITÉ : On vérifie si l'idClient existe en session
+// On vérifie si l'idClient existe en session
 if (!isset($_SESSION['idClient'])) {
     echo "
     <div class='container mt-5'>
@@ -23,8 +23,7 @@ $idClient = $_SESSION['idClient'];
     <?php
     try {
         /**
-         * JOINTURE SQL : On lie 'commande' (c) et 'statut' (s)
-         * On récupère 'libelleStatut' pour ne plus voir le chiffre '2'
+         * On récupère 'libelleStatut' pour ne plus voir l'id du produit
          */
         $stmt = $pdo->prepare("
             SELECT c.noCommande, c.dateCommande, s.libelleStatut, s.idStatut

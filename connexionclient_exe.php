@@ -14,7 +14,6 @@ if (empty($identifiant) || empty($mdpParam)) {
 
 try {
     /**
-     * 3. LA REQUÊTE CORRIGÉE
      * On utilise 'pseudo' dans le WHERE car 'email' est inconnu en BDD.
      */
     $sql = "SELECT idClient, nom, prenom, pseudo FROM client 
@@ -29,7 +28,6 @@ try {
     $client = $statement->fetch(PDO::FETCH_ASSOC);
 
     if ($client) {
-        // ✅ CONNEXION RÉUSSIE
         // On stocke le nom complet pour l'affichage et l'ID pour l'historique
         $_SESSION['user'] = $client['prenom'] . " " . $client['nom'];
         $_SESSION['idClient'] = $client['idClient']; 
@@ -37,7 +35,7 @@ try {
         header("Location: index.php?page=accueil");
         exit();
     } else {
-        // ❌ ÉCHEC : Le pseudo ou le mdp ne correspond pas
+        //erreur : Le pseudo ou le mdp ne correspond pas
         header("Location: index.php?page=connexionclient&erreur=Pseudo ou mot de passe incorrect");
         exit();
     }
