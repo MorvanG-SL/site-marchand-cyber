@@ -17,3 +17,6 @@
 # Tests et couverture
 /coverage/
 .phpunit.result.cache
+
+#masque le .vscode lors du commit
+.vscode/
