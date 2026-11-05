@@ -9,4 +9,11 @@ $pdo = new PDO(
 $user_bdd,
 $mdp
 );
+
+// 3. Récupération des variables de connexion
+$host     = getenv('DB_HOST');
+$dbname   = getenv('DB_NAME');
+$user     = getenv('DB_USER');
+$password = getenv('DB_PASSWORD');
+$charset  = getenv('DB_CHARSET');
 ?>
