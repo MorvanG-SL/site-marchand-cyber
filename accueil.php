@@ -24,21 +24,21 @@
         <div class="row text-center">
 
             <div class="col-md-4">
-                <div class="p-4 shadow rounded bg-white">
+                <div class="p-4 shadow rounded bg-blue">
                     <h4> Livraison rapide</h4>
                     <p>Recevez vos produits en 48h.</p>
                 </div>
             </div>
 
             <div class="col-md-4">
-                <div class="p-4 shadow rounded bg-white">
+                <div class="p-4 shadow rounded bg-black">
                     <h4> Paiement sécurisé</h4>
                     <p>Transactions 100% sécurisées.</p>
                 </div>
             </div>
 
             <div class="col-md-4">
-                <div class="p-4 shadow rounded bg-white">
+                <div class="p-4 shadow rounded bg-black">
                     <h4> Qualité garantie</h4>
                     <p>Produits testés et approuvés.</p>
                 </div>

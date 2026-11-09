@@ -10,7 +10,7 @@ $dotenv->load();
 $hashKey = getenv('hashKey');
 
 //  Créez et complétez la fonction qui prend le mot de passe utilisateur en paramètre et retourne son hash.
- 
+
 function hasher_mdp(string $mdp): string {
     global $hashKey; // Permet d'accéder à la variable définie en dehors de la fonction
 

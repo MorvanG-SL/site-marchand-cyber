@@ -1,6 +1,6 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
-        <div class="col-md-4 border p-4 shadow-sm bg-light rounded">
+        <div class="col-md-4 border p-4 shadow-sm bg-blue rounded">
             <h3 class="text-center mb-4">Connexion Administration</h3>
             
             <?php if(isset($_GET['erreur'])): ?>
