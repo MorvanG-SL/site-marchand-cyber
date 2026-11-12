@@ -1,5 +1,4 @@
 <?php
-// Inclusion de l'autoloader de Composer pour charger la bibliothèque Dotenv
 require_once __DIR__ . '/vendor/autoload.php';
 
 // Initialisation sécurisée de Dotenv (UnsafeImmutable permet à getenv() de lire les variables)
@@ -21,7 +20,7 @@ function hasher_mdp(string $mdp): string {
 }
 // 2. Fonction qui vérifie si un mot de passe clair correspond à un hash enregistré
 function verifier_mdp(string $mdp, string $hash): bool {
-    // On re-hache le mot de passe saisi et on compare de manière sécurisée (anti-timing attack)
+    // On re-hache le mot de passe saisi et on compare de manière sécurisée
     $hash_calcule = hasher_mdp($mdp);
     return hash_equals($hash, $hash_calcule);
 }

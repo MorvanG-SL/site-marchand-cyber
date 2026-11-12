@@ -44,7 +44,7 @@ try {
         'telephone' => $telephoneSaisi
     ]);
 } catch (PDOException $monException) {
-    header("Location: index.php?page=inscription&erreur=Erreur lors de l'inscription (pseudo déjà utilisé ?)");
+    header("Location: index.php?page=inscription&erreur=Erreur lors de l'inscription : pseudo déjà utilisé");
     exit;
 }
 
