@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/gestion_secrets.php';
+
 // Récupération sécurisée des variables d'environnement
 $host = getenv('DB_HOST');
 $dbname = getenv('DB_NAME');

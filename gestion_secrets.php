@@ -3,12 +3,12 @@
 require_once __DIR__ . '/vendor/autoload.php';
 
 // Initialisation sécurisée de Dotenv avec l'antislash initial pour corriger l'erreur de classe inconnue
-$dotenv = \Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv = \Dotenv\Dotenv::createUnsafeImmutable(__DIR__);
 $dotenv->load();
 
 // Chargez votre variable de hashage en début de fichier.
 $hashKey = getenv('hashKey');
-
+$cle_chiffrement = getenv('encryption_key');
 //  Créez et complétez la fonction qui prend le mot de passe utilisateur en paramètre et retourne son hash.
 
 function hasher_mdp(string $mdp): string {

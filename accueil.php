@@ -24,7 +24,7 @@
         <div class="row text-center">
 
             <div class="col-md-4">
-                <div class="p-4 shadow rounded bg-blue">
+                <div class="p-4 shadow rounded bg-black">
                     <h4> Livraison rapide</h4>
                     <p>Recevez vos produits en 48h.</p>
                 </div>
