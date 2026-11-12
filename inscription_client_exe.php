@@ -23,7 +23,7 @@ if (empty($pseudoSaisi) || empty($mdpSaisi) || empty($nomSaisi) || empty($prenom
     exit;
 }
 
-// Inclusion de info_bdd.php (qui charge automatiquement gestion_secrets.php et la fonction hasher_mdp)
+// Inclusion de info_bdd.php
 require_once __DIR__ . '/info_bdd.php';
 
 // Hachage sécurisé du mot de passe avant l'insertion en base de données
@@ -39,7 +39,7 @@ try {
         'nom' => $nomSaisi,
         'prenom' => $prenomSaisi,
         'pseudo' => $pseudoSaisi,
-        'mdp' => $mdpHashe, // On enregistre l'empreinte hachée et non le mot de passe en clair
+        'mdp' => $mdpHashe, // On enregistre le hash et non le mot de passe en clair
         'mail' => $mailSaisi,
         'telephone' => $telephoneSaisi
     ]);

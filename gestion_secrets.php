@@ -11,9 +11,9 @@ $cle_chiffrement = getenv('encryption_key');
 
 // Fonction qui prend le mot de passe utilisateur en paramètre et retourne son hash.
 function hasher_mdp(string $mdp): string {
-    global $hashKey; // Permet d'accéder à la variable définie en dehors de la fonction
+    global $hashKey;
 
-    // Utilisation de l'algorithme sha256 combiné à la clé d'environnement
+    // Utilisation de l'algorithme sha256
     $hash_du_mdp = hash_hmac('sha256', $mdp, $hashKey);
 
     return $hash_du_mdp;
