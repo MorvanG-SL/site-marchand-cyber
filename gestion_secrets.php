@@ -19,4 +19,10 @@ function hasher_mdp(string $mdp): string {
 
     return $hash_du_mdp;
 }
+// 2. Fonction qui vérifie si un mot de passe clair correspond à un hash enregistré
+function verifier_mdp(string $mdp, string $hash): bool {
+    // On re-hache le mot de passe saisi et on compare de manière sécurisée (anti-timing attack)
+    $hash_calcule = hasher_mdp($mdp);
+    return hash_equals($hash, $hash_calcule);
+}
 ?>
