@@ -1,4 +1,8 @@
 <?php
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+    header("Location: index.php?page=connexion&erreur=Accès refusé");
+    exit();
+}
 require_once("info_bdd.php");
 ?>
 

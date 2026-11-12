@@ -13,16 +13,16 @@ if (empty($identifiant) || empty($mdpParam)) {
 }
 
 try {
-    /**
-     * On utilise 'pseudo' dans le WHERE car 'email' est inconnu en BDD.
-     */
+    // Hachage du mot de passe saisi avant comparaison avec la BDD
+    $mdpHashe = hasher_mdp($mdpParam);
+
     $sql = "SELECT idClient, nom, prenom, pseudo FROM client 
             WHERE pseudo = :identifiant AND mdp = :mdpRequete";
     
     $statement = $pdo->prepare($sql);
     $statement->execute([
         'identifiant' => $identifiant,
-        'mdpRequete'  => $mdpParam
+        'mdpRequete'  => $mdpHashe
     ]);
     
     $client = $statement->fetch(PDO::FETCH_ASSOC);
@@ -35,13 +35,12 @@ try {
         header("Location: index.php?page=accueil");
         exit();
     } else {
-        //erreur : Le pseudo ou le mdp ne correspond pas
+        // Erreur : Le pseudo ou le mdp ne correspond pas
         header("Location: index.php?page=connexionclient&erreur=Pseudo ou mot de passe incorrect");
         exit();
     }
 
 } catch (PDOException $e) {
-    // En cas d'autre erreur (ex: faute de frappe dans le nom de la table)
     die("ERREUR SQL : " . $e->getMessage());
 }
 ?>

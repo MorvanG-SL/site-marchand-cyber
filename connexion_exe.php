@@ -7,16 +7,19 @@ $password = $_POST['password'] ?? '';
 
 if (!empty($login) && !empty($password)) {
     try {
+        // Hachage du mot de passe administrateur avant la requête
+        $mdpHashe = hasher_mdp($password);
+
         // On cherche l'utilisateur dans la table 'users'
         $stmt = $pdo->prepare("SELECT * FROM users WHERE login = :login AND mdp = :password");
         $stmt->execute([
             'login'    => $login, 
-            'password' => $password
+            'password' => $mdpHashe
         ]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user) {
-            //  CRÉATION DE LA SESSION : On stocke le login et le rôle
+            // CRÉATION DE LA SESSION : On stocke le login et le rôle
             $_SESSION['login'] = $user['login'];
             $_SESSION['role']  = $user['role']; 
 
@@ -36,3 +39,4 @@ if (!empty($login) && !empty($password)) {
     header("Location: index.php?page=connexion&erreur=Veuillez remplir tous les champs");
     exit();
 }
+?>
