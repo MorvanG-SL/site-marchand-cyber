@@ -32,7 +32,7 @@ $liste_produits = $reponse->fetchall(PDO::FETCH_ASSOC);
                                 </div>
                             </a>
                         </div>
-                        <div class="card-footer">
+                        <div class="card-footer text-white">
                             <small class="text-body-secondary">
                                 <?php echo $produit['prixUnitaire']; ?> €</small>
                         </div>
