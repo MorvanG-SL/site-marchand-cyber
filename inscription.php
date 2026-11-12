@@ -4,7 +4,8 @@
 
 <?php if (isset($_GET["erreur"])) { ?>
     <div class="mt-2 p-3 w-75 mx-auto alert alert-danger">
-        <?php echo $_GET["erreur"] ?>
+        <!-- Protection contre la faille XSS lors de l'affichage du message d'erreur -->
+        <?php echo htmlspecialchars($_GET["erreur"]); ?>
     </div>
 <?php } ?>
 
