@@ -30,7 +30,7 @@ require_once __DIR__ . '/info_bdd.php';
 
 $nomChiffre = chiffrer_donnee($nomSaisi, $cle_chiffrement);
 
-$prenomChiffre = chiffrer_donnee($prenomSaisi, getenv('encryption_key'));
+$prenomChiffre = chiffrer_donnee($prenomSaisi, $cle_chiffrement);
 
 // Hachage sécurisé du mot de passe avant l'insertion en base de données
 $mdpHashe = hasher_mdp($mdpSaisi);
@@ -42,8 +42,8 @@ try {
     
     $statement = $pdo->prepare($requeteInsertion);
     $resultat = $statement->execute([
-        'nom' => $nomSaisi,
-        'prenom' => $prenomSaisi,
+        'nom' => $nomChiffre,
+        'prenom' => $prenomChiffre,
         'pseudo' => $pseudoSaisi,
         'mdp' => $mdpHashe, // On enregistre le hash et non le mot de passe en clair
         'mail' => $mailSaisi,
