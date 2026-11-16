@@ -77,11 +77,24 @@ if (!function_exists('navClass')) {
       </a>
 
       <?php if ($estConnecte): ?>
+        <?php
+        require_once __DIR__ . '/gestion_secrets.php';
+
+        $nomAffiche = '';
+        if (!empty($_SESSION['user'])) {
+            $parties = explode(' ', $_SESSION['user'], 2);
+            $nomClair = dechiffrer_donnee($parties[0], $cle_chiffrement);
+            $prenomClair = isset($parties[1]) ? dechiffrer_donnee($parties[1], $cle_chiffrement) : '';
+            $nomAffiche = trim($nomClair . ' ' . $prenomClair);
+        } elseif (!empty($_SESSION['login'])) {
+            $nomAffiche = $_SESSION['login'];
+        }
+        ?>
         <!-- Formulaire de Déconnexion (Client ou Admin) -->
         <form action="deconnexion.php" method="post" class="m-0">
           <button type="submit" class="btn btn-outline-light d-flex align-items-center gap-2 fw-semibold" style="border-radius:9px;">
             <i class="bi bi-box-arrow-right"></i> Déconnexion
-            <small class="opacity-50" style="font-size: 0.75rem;">(<?= htmlspecialchars($_SESSION['user'] ?? $_SESSION['login']) ?>)</small>
+            <small class="opacity-50" style="font-size: 0.75rem;">(<?= htmlspecialchars($nomAffiche) ?>)</small>
           </button>
         </form>
       <?php else: ?>
