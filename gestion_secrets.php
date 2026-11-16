@@ -24,4 +24,15 @@ function verifier_mdp(string $mdp, string $hash): bool {
     $hash_calcule = hasher_mdp($mdp);
     return hash_equals($hash, $hash_calcule);
 }
+
+function chiffrer_donnee (string $donnee, string $cle_chiffrement): string {
+    $donnee_chiffree = openssl_encrypt($donnee, 'AES-128-ECB', $cle_chiffrement); 
+	return $donnee_chiffree;
+    }
+
+    function dechiffrer_donnee (string $donnee_chiffree, string $cle_dechiffrement): string {
+      $donnee_claire = openssl_decrypt($donnee_chiffree, 'AES-128-ECB', $cle_dechiffrement); 
+	return $donnee_claire;
+}
+
 ?>
