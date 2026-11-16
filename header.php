@@ -79,7 +79,7 @@ if (!function_exists('navClass')) {
       <?php if ($estConnecte): ?>
         <?php
         require_once __DIR__ . '/gestion_secrets.php';
-
+        // permet de récupérer le nom et prénom du client connecté pour l'afficher dans le bouton de déconnexion (déchiffré)
         $nomAffiche = '';
         if (!empty($_SESSION['user'])) {
             $parties = explode(' ', $_SESSION['user'], 2);
