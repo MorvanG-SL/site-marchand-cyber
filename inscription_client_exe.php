@@ -1,4 +1,6 @@
 <?php
+require_once 'gestion_secrets.php';
+
 session_save_path(__DIR__ . '/tmp');
 session_start();
 
@@ -25,6 +27,10 @@ if (empty($pseudoSaisi) || empty($mdpSaisi) || empty($nomSaisi) || empty($prenom
 
 // Inclusion de info_bdd.php
 require_once __DIR__ . '/info_bdd.php';
+
+$nomChiffre = chiffrer_donnee($nomSaisi, $cle_chiffrement);
+
+$prenomChiffre = chiffrer_donnee($prenomSaisi, $cle_chiffrement);
 
 // Hachage sécurisé du mot de passe avant l'insertion en base de données
 $mdpHashe = hasher_mdp($mdpSaisi);
