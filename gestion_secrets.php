@@ -21,20 +21,29 @@ function hasher_mdp(string $mdp): string {
 }
 
 // Fonction qui vérifie si un mot de passe clair correspond à un hash enregistré
-function verifier_mdp(string $mdp, string $hash): bool {
-    // On re-hache le mot de passe saisi et on compare de manière sécurisée
-    $hash_calcule = hasher_mdp($mdp);
-    return hash_equals($hash, $hash_calcule);
+function chiffrer_donnee (string $donnee, string $cle_chiffrement): string {
+    $methode = 'AES-128-CBC';
+
+    $longueur_iv = openssl_cipher_iv_length($methode);
+    $iv = random_bytes($longueur_iv);
+
+    $donnee_chiffree = openssl_encrypt($donnee, $methode, $cle_chiffrement, OPENSSL_RAW_DATA, $iv);
+
+
+    return base64_encode($iv . $donnee_chiffree);
 }
 
-function chiffrer_donnee (string $donnee, string $cle_chiffrement): string {
-    $donnee_chiffree = openssl_encrypt($donnee, 'AES-128-ECB', $cle_chiffrement); 
-	return $donnee_chiffree;
-    }
+function dechiffrer_donnee (string $donnee_chiffree, string $cle_dechiffrement): string {
+    $methode = 'AES-128-CBC';
+    $donnees_brutes = base64_decode($donnee_chiffree);
 
-    function dechiffrer_donnee (string $donnee_chiffree, string $cle_dechiffrement): string {
-      $donnee_claire = openssl_decrypt($donnee_chiffree, 'AES-128-ECB', $cle_dechiffrement); 
-	return $donnee_claire;
+    $longueur_iv = openssl_cipher_iv_length($methode);
+    $iv = substr($donnees_brutes, 0, $longueur_iv);
+    $texte_chiffre = substr($donnees_brutes, $longueur_iv);
+
+    $donnee_claire = openssl_decrypt($texte_chiffre, $methode, $cle_dechiffrement, OPENSSL_RAW_DATA, $iv);
+
+    return $donnee_claire === false ? '' : $donnee_claire;
 }
 
 ?>
