@@ -29,37 +29,38 @@ function verifierConnexion() {
 }
 
 function verifierCoordonnees() {
+    let pseudo = document.getElementById("pseudo").value.trim();
+    let mdp = document.getElementById("mdp").value;
+    let mdp2 = document.getElementById("mdp2").value;
     let nom = document.getElementById("nom").value.trim();
-    let prénom = document.getElementById("pré").value.trim();
-    let email = document.getElementById("email").value.trim();
-    let téléphone = document.getElementById("domaine").value.trim();
-    let newsletter = document.getElementById("connexion").checked;
-    let message = document.getElementById("messageErreur");
+    let prenom = document.getElementById("prenom").value.trim();
+    let email = document.getElementById("mail").value.trim();
+    let telephone = document.getElementById("telephone").value.replace(/[\s.-]/g, "");
 
-    message.textContent = "";
+    const regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const regexTelephone = /^0[1-9]\d{8}$/;
 
-    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (pseudo === "" || mdp === "" || nom === "" || prenom === "") {
+        alert("Veuillez remplir tous les champs obligatoires (*).");
+        return false;
+    }
 
-    if (nom === "") {
-        message.textContent = "Le champ Nom doit être rempli.";
+    if (mdp !== mdp2) {
+        alert("Les deux mots de passe ne sont pas identiques.");
+        return false;
     }
-    else if (prénom === "") {
-        message.textContent = "Le champ Prénom doit être rempli.";
+
+    // Si l'e-mail est renseigné, on vérifie son format
+    if (email !== "" && !regexEmail.test(email)) {
+        alert("L'adresse e-mail n'est pas valide (ex: nom@domaine.fr).");
+        return false;
     }
-    else if (email === "") {
-        message.textContent = "Le champ E-mail doit être rempli.";
+
+    // Si le téléphone est renseigné, on vérifie qu'il contient 10 chiffres valides
+    if (telephone !== "" && !regexTelephone.test(telephone)) {
+        alert("Le numéro de téléphone doit contenir 10 chiffres valides (ex: 0612345678).");
+        return false;
     }
-    else if (!regexEmail.test(email)) {
-        message.textContent = "L'adresse e-mail n'est pas valide.";
-    }
-    else if (téléphone === "") {
-        message.textContent = "Le champ Téléphone doit être rempli.";
-    }
-    else if (!/^\d{10}$/.test(téléphone)) {
-        message.textContent = "Le numéro de téléphone doit contenir exactement 10 chiffres.";
-    }
-    else {
-        alert("Formulaire envoyé avec succès !");
-    }
+
+    return true;
 }
-
