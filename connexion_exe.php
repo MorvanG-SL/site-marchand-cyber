@@ -2,6 +2,8 @@
 session_start();
 require_once("info_bdd.php");
 
+require_once 'gestion_secrets.php';
+
 $login = $_POST['login'] ?? '';
 $password = $_POST['password'] ?? '';
 
