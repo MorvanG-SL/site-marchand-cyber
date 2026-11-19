@@ -71,6 +71,8 @@ if ($reqVerif->fetchColumn() > 0) {
 $nomChiffre = chiffrer_donnee($nomSaisi, $cle_chiffrement);
 $prenomChiffre = chiffrer_donnee($prenomSaisi, $cle_chiffrement);
 $mdpHashe = hasher_mdp($mdpSaisi);
+$mailChiffre = chiffrer_donnee($mailSaisi, $cle_chiffrement);
+$telephoneChiffre = chiffrer_donnee($telephoneSaisi, $cle_chiffrement);
 
 // Insertion sécurisée en base de données avec gestion des échecs
 try {
@@ -83,8 +85,8 @@ try {
         'prenom' => $prenomChiffre,
         'pseudo' => $pseudoSaisi,
         'mdp' => $mdpHashe,
-        'mail' => $mailSaisi,
-        'telephone' => $telephoneSaisi
+        'mail' => $mailChiffre,
+        'telephone' => $telephoneChiffre
     ]);
 
     if ($resultat) {
