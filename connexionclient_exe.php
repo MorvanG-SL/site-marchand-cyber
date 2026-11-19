@@ -2,11 +2,9 @@
 session_start();
 require_once 'info_bdd.php';
 
-// 1. On récupère ce que l'utilisateur a tapé dans le champ Identifiant
 $identifiant = trim($_POST['email'] ?? ''); 
 $mdpParam = $_POST['password'] ?? '';
 
-// 2. Sécurité : on ne lance pas la requête si c'est vide
 if (empty($identifiant) || empty($mdpParam)) {
     header("Location: index.php?page=connexionclient&erreur=Champs vides");
     exit();

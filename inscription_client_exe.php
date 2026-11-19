@@ -32,6 +32,9 @@ $nomChiffre = chiffrer_donnee($nomSaisi, $cle_chiffrement);
 
 $prenomChiffre = chiffrer_donnee($prenomSaisi, $cle_chiffrement);
 
+$mailChiffre = chiffrer_donnee($mailSaisi, $cle_chiffrement);
+
+$telephoneChiffre = chiffrer_donnee($telephoneSaisi, $cle_chiffrement);
 // Hachage sécurisé du mot de passe avant l'insertion en base de données
 $mdpHashe = hasher_mdp($mdpSaisi);
 
@@ -45,9 +48,9 @@ try {
         'nom' => $nomChiffre,
         'prenom' => $prenomChiffre,
         'pseudo' => $pseudoSaisi,
-        'mdp' => $mdpHashe, // On enregistre le hash et non le mot de passe en clair
-        'mail' => $mailSaisi,
-        'telephone' => $telephoneSaisi
+        'mdp' => $mdpHashe,
+        'mail' => $mailChiffre,
+        'telephone' => $telephoneChiffre
     ]);
 } catch (PDOException $monException) {
     header("Location: index.php?page=inscription&erreur=Erreur lors de l'inscription : pseudo déjà utilisé");
