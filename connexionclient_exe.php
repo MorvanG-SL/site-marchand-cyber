@@ -19,7 +19,7 @@ if (empty($identifiant) || empty($mdpParam)) {
     exit();
 }
 
-// Vérification du format et de la longueur de l'identifiant (pseudo)
+// Vérification du format et de la longueur de l'identifiant
 $identifiantSansTirets = str_replace(['-', '_'], '', $identifiant);
 if (strlen($identifiant) < 3 || strlen($identifiant) > 50 || !ctype_alnum($identifiantSansTirets)) {
     header("Location: index.php?page=connexionclient&erreur=" . urlencode("Pseudo ou mot de passe incorrect."));
@@ -50,6 +50,9 @@ try {
 
         $_SESSION['user'] = $prenomClair . " " . $nomClair;
         $_SESSION['idClient'] = $client['idClient']; 
+
+        // Journalisation du succès (uniquement l'ID et le pseudo, aucune donnée sensible)
+        error_log("[INFO] [connexionclient_exe.php] : Connexion réussie pour le client ID " . $client['idClient'] . " (pseudo : " . $client['pseudo'] . ").");
         
         header("Location: index.php?page=accueil");
         exit();
