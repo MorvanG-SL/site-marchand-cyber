@@ -20,3 +20,5 @@
 
 #masque le .vscode lors du commit
 .vscode/
+
+php.ini
