@@ -1,6 +1,5 @@
 <?php
 require_once 'gestion_secrets.php';
-session_save_path(__DIR__ . '/tmp');
 session_start();
 require_once 'info_bdd.php';
 
