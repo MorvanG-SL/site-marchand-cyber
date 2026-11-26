@@ -66,4 +66,15 @@ try {
     header("Location: index.php?page=connexionclient&erreur=" . urlencode("Une erreur technique est survenue."));
     exit();
 }
+
+require_once 'journal.php';
+
+// Succès
+journaliser('INFO', 'CONNEXION_ADMIN_OK', 'login=' . nettoyer_log($user['login']));
+
+// Échec d'identifiants
+journaliser('WARNING', 'CONNEXION_ADMIN_ECHEC', 'login=' . nettoyer_log($login));
+
+// Erreur BDD (dans le catch)
+journaliser('ERROR', 'BDD_ERREUR', 'Erreur SQL lors de la connexion admin');
 ?>
