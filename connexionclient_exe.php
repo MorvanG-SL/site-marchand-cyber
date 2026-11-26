@@ -1,9 +1,11 @@
 <?php
 require_once 'gestion_secrets.php';
+require_once 'journal.php';
 session_start();
 require_once 'info_bdd.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    journaliser('WARNING', 'ACCES_INVALIDE', 'Tentative accès direct sans POST sur connexionclient_exe.php');
     header("Location: index.php?page=connexionclient");
     exit();
 }
@@ -14,6 +16,7 @@ $mdpParam = $_POST['password'] ?? '';
 
 // Vérification pour voir si les champs sont vides
 if (empty($identifiant) || empty($mdpParam)) {
+    journaliser('WARNING', 'CONNEXION_CLIENT_ECHEC', 'Champs vides lors de la tentative de connexion');
     header("Location: index.php?page=connexionclient&erreur=" . urlencode("Veuillez remplir tous les champs."));
     exit();
 }
@@ -21,6 +24,7 @@ if (empty($identifiant) || empty($mdpParam)) {
 // Vérification du format et de la longueur de l'identifiant
 $identifiantSansTirets = str_replace(['-', '_'], '', $identifiant);
 if (strlen($identifiant) < 3 || strlen($identifiant) > 50 || !ctype_alnum($identifiantSansTirets)) {
+    journaliser('WARNING', 'CONNEXION_CLIENT_ECHEC', 'Format identifiant invalide : pseudo=' . nettoyer_log($identifiant));
     header("Location: index.php?page=connexionclient&erreur=" . urlencode("Pseudo ou mot de passe incorrect."));
     exit();
 }
@@ -50,31 +54,24 @@ try {
         $_SESSION['user'] = $prenomClair . " " . $nomClair;
         $_SESSION['idClient'] = $client['idClient']; 
 
-        // Journalisation du succès (uniquement l'ID et le pseudo, aucune donnée sensible)
-        error_log("[INFO] [connexionclient_exe.php] : Connexion réussie pour le client ID " . $client['idClient'] . " (pseudo : " . $client['pseudo'] . ").");
+        // Journalisation du succès (uniquement l'ID et le pseudo nettoyé, aucune donnée sensible)
+        journaliser('INFO', 'CONNEXION_CLIENT_OK', 'idClient=' . $client['idClient'] . ' pseudo=' . nettoyer_log($client['pseudo']));
         
         header("Location: index.php?page=accueil");
         exit();
     } else {
-        // Message pour indiquer si le pseudo existe ou non
+        // Journalisation de l'échec d'identifiants
+        journaliser('WARNING', 'CONNEXION_CLIENT_ECHEC', 'Identifiants incorrects : pseudo=' . nettoyer_log($identifiant));
+
         header("Location: index.php?page=connexionclient&erreur=" . urlencode("Pseudo ou mot de passe incorrect."));
         exit();
     }
 
 } catch (PDOException $e) {
-    error_log("Erreur SQL connexionclient : " . $e->getMessage());
+    // Journalisation de l'erreur SQL
+    journaliser('ERROR', 'BDD_ERREUR', 'Erreur SQL lors de la connexion client');
+
     header("Location: index.php?page=connexionclient&erreur=" . urlencode("Une erreur technique est survenue."));
     exit();
 }
-
-require_once 'journal.php';
-
-// Succès
-journaliser('INFO', 'CONNEXION_ADMIN_OK', 'login=' . nettoyer_log($user['login']));
-
-// Échec d'identifiants
-journaliser('WARNING', 'CONNEXION_ADMIN_ECHEC', 'login=' . nettoyer_log($login));
-
-// Erreur BDD (dans le catch)
-journaliser('ERROR', 'BDD_ERREUR', 'Erreur SQL lors de la connexion admin');
 ?>

@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once("info_bdd.php");
-
+require_once 'journal.php';
 require_once 'gestion_secrets.php';
 
 $login = $_POST['login'] ?? '';
@@ -21,34 +21,37 @@ if (!empty($login) && !empty($password)) {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user) {
+            session_regenerate_id(true);
+
             // CRÉATION DE LA SESSION : On stocke le login et le rôle
             $_SESSION['login'] = $user['login'];
             $_SESSION['role']  = $user['role']; 
+
+            // Journalisation du succès AVANT exit()
+            journaliser('INFO', 'CONNEXION_ADMIN_OK', 'login=' . nettoyer_log($user['login']));
 
             // Redirection vers l'espace admin
             header("Location: index.php?page=admin");
             exit();
         } else {
+            // Journalisation de l'échec AVANT exit()
+            journaliser('WARNING', 'CONNEXION_ADMIN_ECHEC', 'login=' . nettoyer_log($login));
+
             // Identifiants faux
-            header("Location: index.php?page=connexion&erreur=Identifiants ou mot de passe incorrects");
+            header("Location: index.php?page=connexion&erreur=" . urlencode("Identifiants ou mot de passe incorrects"));
             exit();
         }
     } catch (PDOException $e) {
-        header("Location: index.php?page=connexion&erreur=Erreur technique");
+        // Journalisation de l'erreur SQL AVANT exit()
+        journaliser('ERROR', 'BDD_ERREUR', 'Erreur SQL lors de la connexion admin');
+
+        header("Location: index.php?page=connexion&erreur=" . urlencode("Erreur technique"));
         exit();
     }
 } else {
-    header("Location: index.php?page=connexion&erreur=Veuillez remplir tous les champs");
+    journaliser('WARNING', 'CONNEXION_ADMIN_ECHEC', 'Champs vides lors de la tentative de connexion');
+
+    header("Location: index.php?page=connexion&erreur=" . urlencode("Veuillez remplir tous les champs"));
     exit();
 }
-require_once 'journal.php';
-
-// Succès
-journaliser('INFO', 'CONNEXION_ADMIN_OK', 'login=' . nettoyer_log($user['login']));
-
-// Échec d'identifiants
-journaliser('WARNING', 'CONNEXION_ADMIN_ECHEC', 'login=' . nettoyer_log($login));
-
-// Erreur BDD (dans le catch)
-journaliser('ERROR', 'BDD_ERREUR', 'Erreur SQL lors de la connexion admin');
 ?>
