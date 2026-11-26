@@ -87,15 +87,8 @@ if (!function_exists('navClass')) {
             <small class="opacity-50" style="font-size: 0.75rem;">(<?= htmlspecialchars($nomAffiche) ?>)</small>
           </button>
         </form>
-        <!-- Formulaire de Déconnexion (Client ou Admin) -->
-        <form action="deconnexion.php" method="post" class="m-0">
-          <button type="submit" class="btn btn-outline-light d-flex align-items-center gap-2 fw-semibold" style="border-radius:9px;">
-            <i class="bi bi-box-arrow-right"></i> Déconnexion
-            <small class="opacity-50" style="font-size: 0.75rem;">(<?= htmlspecialchars($nomAffiche) ?>)</small>
-          </button>
-        </form>
       <?php else: ?>
-        <!-- Bouton Connexion si personne n'est là -->
+        <!-- Bouton Connexion si personne n'est là -->  
         <a href="./index.php?page=connexionclient" class="btn <?= $page === 'connexionclient' ? 'btn-primary' : 'btn-outline-primary' ?> d-flex align-items-center gap-2 fw-semibold" style="border-radius:9px;">
           <i class="bi bi-person-circle"></i> Connexion
         </a>
