@@ -1,5 +1,5 @@
 <?php
-if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'adm') {
     header("Location: index.php?page=connexion&erreur=Accès refusé");
     exit();
 }
